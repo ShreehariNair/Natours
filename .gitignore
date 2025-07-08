@@ -1,5 +1,5 @@
 node_modules/
 *.env
-.cache/
+.parcel-cache/
 # Local Netlify folder
 .netlify
