@@ -19,7 +19,7 @@ const createSendToken = (user, statusCode, req, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: req.secure || req.headers('x-forwarded-proto') === 'https',
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   };
 
   res.cookie('jwt', token, cookieOptions);
@@ -47,6 +47,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(req.headers);
 
   // 1) Check if email and password exist
   if (!email || !password) {
@@ -65,6 +66,7 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check if it's there
   let token;
+  console.log(req.headers);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
